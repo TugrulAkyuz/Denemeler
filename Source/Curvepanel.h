@@ -24,10 +24,25 @@ class CurvePanel : public juce::Component
     void paint(juce::Graphics &g) override
     {
         g.fillAll(juce::Colours::darkgrey);
+
+  
+
+            g.setColour(juce::Colour(0xff4a4a4a));
+        for (int x = 0; x < getWidth(); x += 8)
+            g.drawLine(x, 0, x, getHeight());
+        for (int y = 0; y < getHeight(); y += 8)
+            g.drawLine(0, y, getWidth(), y);
+
         p.clear();
+        
         p.startNewSubPath(0, 0);
        // p.cubicTo(Control_1, Control_2,juce::Point<float>(getWidth(),getHeight()));
-        p.quadraticTo(Control_1,juce::Point<float>(getWidth(),getHeight()));
+       // p.quadraticTo(Control_1,juce::Point<float>(getWidth(),getHeight()));
+
+        for (auto x = 0;   x < getWidth() ; x = x + 4)
+        {
+             p.lineTo(x, getHeight()/2 + (getHeight()/2)*sin(3.14*x*1.0/ getHeight()));
+        }
         g.setColour (juce::Colours::yellow);
         g.strokePath(p,juce::PathStrokeType (3));
         g.setColour (juce::Colours::blue);
