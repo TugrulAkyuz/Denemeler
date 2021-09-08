@@ -12,6 +12,7 @@ MainComponent::MainComponent()
     for(auto * comp : getAllSliders())
     {
         addAndMakeVisible(comp);
+        ((juce::Slider *)(comp))->addListener(this);
     }
  
     button1.setState(juce::Button::ButtonState::buttonDown);
@@ -22,6 +23,13 @@ MainComponent::MainComponent()
     slider41.setVisible(false);
     
     addAndMakeVisible(myCurvePanel);
+    
+    //slider1.addListener(this);
+    
+    
+    
+    myADSR.setSampleRate(44000);
+     
     
 }
 
@@ -39,8 +47,8 @@ void MainComponent::paint (juce::Graphics& g)
     
     g.setFont (juce::Font (16.0f));
     
-    juce::ColourGradient cg(juce::Colour::fromFloatRGBA(1.0f, 1.0f, 1.0f, 0.9f), getWidth()/2 , 0,
-                            juce::Colour::fromFloatRGBA(0.0f, 0.0f, 0.0f, 0.9f), 0,  getHeight()/2 , true);
+    juce::ColourGradient cg(juce::Colour::fromFloatRGBA(1.0f, 1.0f, 1.0f, 0.3f), getWidth()/2 , 0,
+                            juce::Colour::fromFloatRGBA(0.0f, 0.0f, 0.0f, 0.3f), 0,  getHeight() , true);
     g.setGradientFill(cg);
     g.fillAll();
     //g.setColour (cg);
@@ -109,8 +117,7 @@ void MainComponent::resized()
 
     }
     
-   
-    
+
     
 
     //tmpBound = bounds.removeFromTop(getHeight()/2).removeFromRight(getWidth()/2);

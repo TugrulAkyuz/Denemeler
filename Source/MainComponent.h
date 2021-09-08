@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "Curvepanel.h"
+ 
 
 
 class MyLookAndFeel : public juce::LookAndFeel_V4
@@ -123,7 +124,8 @@ private:
  your controls and content.
  */
 class MainComponent  : public juce::Component,
-                       public juce::Button::Listener
+                       public juce::Button::Listener,
+                       public juce::Slider::Listener
                         
 {
 public:
@@ -152,6 +154,8 @@ private:
     juce::ToggleButton button1;
     CurvePanel myCurvePanel;
  
+    juce::ADSR myADSR;
+    juce::ADSR::Parameters myADSR_Params;
     
     MyLookAndFeel myLookAndFeel;
     std::vector <juce::Component *> getAllSliders(){
@@ -180,6 +184,26 @@ private:
            }
         
     }
+    
+     void sliderValueChanged (juce::Slider* slider) override
+     {
+         if(slider == &slider1)
+         {
+             myCurvePanel.setADSF(ATTACK,slider->getValue()*1.0/100);
+         }
+         if(slider == &slider2)
+         {
+             myCurvePanel.setADSF(DECAY,slider->getValue()*1.0/100);
+         }
+         if(slider == &slider3)
+         {
+             myCurvePanel.setADSF(SUSTAIN,slider->getValue()*1.0/100);
+         }
+         if(slider == &slider4)
+         {
+             myCurvePanel.setADSF(RELEASE,slider->getValue()*1.0/100);
+         }
+     }
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
