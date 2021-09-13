@@ -9,7 +9,9 @@
  */
 
 #pragma once
+#include "AyriRect.h"
 #include "../JuceLibraryCode/JuceHeader.h"
+
 
 enum
 {
@@ -20,8 +22,7 @@ enum
     
 };
 
-class CurvePanel : public juce::Component ,
-public juce::Timer
+class CurvePanel : public juce::Component
 {
     public :
     CurvePanel()
@@ -32,22 +33,19 @@ public juce::Timer
         decay_time = 1.0f;
         sustain_value = 1.0;
         release_time = 0;;
-        //startTimer(100);
+        //startTimer(ms);
+    
         
     }
     
-    void timerCallback() override
-    {
-        t++;
-        repaint();
-    }
+
     
     void paint(juce::Graphics &g) override
     {
         
         auto area = getLocalBounds();
         
-
+        
         
         g.fillAll(juce::Colours::white);
         
@@ -55,31 +53,31 @@ public juce::Timer
         ds.radius = 10;
         ds.offset = { 0, 0 };
         juce::Rectangle<int> r(area);
-
-       
-          ds.drawForRectangle(g, r);
+        
+        
+        ds.drawForRectangle(g, r);
         g.setColour(juce::Colours::black);
         g.drawRect(r,2);
         
         //g.setColour(juce::Colour(0xff4a4a4a));
         g.setColour(juce::Colour(0x998a8a8a));
         for (int x = 0; x < getWidth(); x += 16*1.618)
-            g.drawLine(x, 0, x, getHeight());
+        g.drawLine(x, 0, x, getHeight());
         for (int y = 0; y < getHeight(); y += 16)
-            g.drawLine(0, y, getWidth(), y);
+        g.drawLine(0, y, getWidth(), y);
         
         p.clear();
         juce::PathStrokeType stroke(3, juce::PathStrokeType::JointStyle::curved,
                                     juce::PathStrokeType::EndCapStyle::rounded);
-             
+        
         p.startNewSubPath(0, getHeight());
         // p.cubicTo(Control_1, Control_2,juce::Point<float>(getWidth(),getHeight()));
         // p.quadraticTo(Control_1,juce::Point<float>(getWidth(),getHeight()));
         
-//        for (auto x = 0;   x < getWidth() ; x = x + 4)
-//        {
-//            p.lineTo(x, getHeight()/2 + aa*(getHeight()/2)*sin(3.14*x*1.0/ getHeight()));
-//        }
+        //        for (auto x = 0;   x < getWidth() ; x = x + 4)
+        //        {
+        //            p.lineTo(x, getHeight()/2 + aa*(getHeight()/2)*sin(3.14*x*1.0/ getHeight()));
+        //        }
         
         // attack
         int attack_pos = attack_time*getWidth()/4;
@@ -100,20 +98,20 @@ public juce::Timer
         p.lineTo(decay_pos + getWidth()/4, sustain_pos);
         //p.lineTo(release_pos,getHeight() );
         p.quadraticTo((release_pos + decay_pos + getWidth()/4)/2, getHeight(), release_pos, getHeight()) ;
-        p.closeSubPath();
-         
+        //p.closeSubPath();
+        
         juce::ColourGradient cg(juce::Colour::fromFloatRGBA(1.0f, 1.0f, 1.0f, 0.8f), getWidth()/2 , 0,
-                               juce::Colour::fromFloatRGBA(0.0f, 0.0f, 0.0f, 0.0f), getWidth()/2,  getHeight() , false);
+                                juce::Colour::fromFloatRGBA(0.0f, 0.0f, 0.0f, 0.0f), getWidth()/2,  getHeight() , false);
         
         g.setGradientFill(cg);;
         g.fillPath(p);
         
         
         
-//        juce::DropShadow ds(juce::Colours::white.withAlpha(0.85f), 2, {2, 2});
-//        ds.radius = 30;
-//        ds.offset = { 0, 10 };
-//        ds.drawForPath(g, p);
+        //        juce::DropShadow ds(juce::Colours::white.withAlpha(0.85f), 2, {2, 2});
+        //        ds.radius = 30;
+        //        ds.offset = { 0, 10 };
+        //        ds.drawForPath(g, p);
         g.setColour (juce::Colours::orange);
         juce::Rectangle<int> rp (0,0,6,6);
         rp.translate(attack_pos-3,1*getHeight()/5 -3);
@@ -131,17 +129,31 @@ public juce::Timer
         g.strokePath(p,stroke);
         g.setColour (juce::Colours::blue);
         
-        g.setColour (juce::Colours::white);
-        juce::Line<float> l(xx,0,xx,getHeight());
-        g.drawLine(l, 2);
+//        g.setColour (juce::Colours::white);
+//        juce::Line<float> l(xx,0,xx,getHeight());
+//        g.drawLine(l, 2);
         
-
-        
+//        float m = ms*(getWidth()/4)*1.0/5000;
+//        float slope = 4*(getHeight()/(attack_pos +0.1))/5;
+//        float x = m*t;
+//        float y = x*slope;
+//
+//        float time_in_point =  sqrt (x*x + y*y);
+//        if(time_in_point < sqrt(attack_pos*attack_pos + m*m*attack_pos*attack_pos))
+//        {
+//            juce::Point <float> pt =  p.getPointAlongPath(time_in_point);
+//            g.drawEllipse(pt.getX(), pt.getY(), 5, 5, 2);
+//        }
+//        else
+//        {
+//            m = 1;
+//        }
+ 
         
     }
     void resized() override
     {
-        
+       // myAyriRect.setBounds(getLocalBounds());
         
     }
     void mouseDown(const juce::MouseEvent& ev) override
@@ -188,18 +200,18 @@ public juce::Timer
     {
         switch(type)
         {
-    case  ATTACK  :
+            case  ATTACK  :
                 attack_time = value;
-        break;
-    case  DECAY  :
+                break;
+            case  DECAY  :
                 decay_time = value;
-        break;
-    case  SUSTAIN  :
+                break;
+            case  SUSTAIN  :
                 sustain_value =  value;
-        break;
-    case  RELEASE  :
+                break;
+            case  RELEASE  :
                 release_time =  value;
-        break;
+                break;
         }
         
         repaint();
@@ -220,7 +232,8 @@ public juce::Timer
     float decay_time;
     float sustain_value;
     float release_time;
-    
+    int ms = 100;
+  
 private:
     
 };

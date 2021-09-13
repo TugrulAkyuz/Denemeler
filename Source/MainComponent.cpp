@@ -12,7 +12,9 @@ MainComponent::MainComponent()
     for(auto * comp : getAllSliders())
     {
         addAndMakeVisible(comp);
-        ((juce::Slider *)(comp))->addListener(this);
+        ((CustomRoratySlider *)(comp))->addListener(this);
+        ((CustomRoratySlider *)(comp))->setValue(50);
+        
     }
  
     button1.setState(juce::Button::ButtonState::buttonDown);
@@ -23,7 +25,7 @@ MainComponent::MainComponent()
     slider41.setVisible(false);
     
     addAndMakeVisible(myCurvePanel);
-    
+    addAndMakeVisible(myAyriRect);
     //slider1.addListener(this);
     
     
@@ -63,8 +65,9 @@ void MainComponent::resized()
     auto bounds = getLocalBounds();
     bounds.reduce(50, 50);
     
-    auto aaa = bounds.removeFromTop(120);
-    myCurvePanel.setBounds(aaa);
+    auto aaa = bounds.removeFromTop(240);
+    myCurvePanel.setBounds(aaa.removeFromLeft(aaa.getWidth()/2));
+    myAyriRect.setBounds(aaa);
     
     
     auto buttonarea = bounds.removeFromTop(50);
