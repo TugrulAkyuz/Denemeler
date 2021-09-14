@@ -32,13 +32,14 @@ public juce::Timer
         decay_time = 1.0f;
         sustain_value = 1.0;
         release_time = 0;;
-        //startTimer(100);
-        
+        startTimer(10);
+        t = 0;
     }
     
     void timerCallback() override
     {
-        t++;
+     
+ 
         repaint();
     }
     
@@ -47,7 +48,7 @@ public juce::Timer
         
         auto area = getLocalBounds();
         
-
+        
         
         g.fillAll(juce::Colours::white);
         
@@ -100,7 +101,7 @@ public juce::Timer
         p.lineTo(decay_pos + getWidth()/4, sustain_pos);
         //p.lineTo(release_pos,getHeight() );
         p.quadraticTo((release_pos + decay_pos + getWidth()/4)/2, getHeight(), release_pos, getHeight()) ;
-        p.closeSubPath();
+        //p.closeSubPath();
          
         juce::ColourGradient cg(juce::Colour::fromFloatRGBA(1.0f, 1.0f, 1.0f, 0.8f), getWidth()/2 , 0,
                                juce::Colour::fromFloatRGBA(0.0f, 0.0f, 0.0f, 0.0f), getWidth()/2,  getHeight() , false);
@@ -132,10 +133,20 @@ public juce::Timer
         g.setColour (juce::Colours::blue);
         
         g.setColour (juce::Colours::white);
-        juce::Line<float> l(xx,0,xx,getHeight());
-        g.drawLine(l, 2);
+        //juce::Line<float> l(xx,0,xx,getHeight());
+       // g.drawLine(l, 2);
         
 
+ /*       t++;
+ 
+        int m;
+
+      
+        if(( t*getHeight() / (attack_pos + 0.01)) )
+           m = 
+
+        juce::Point<float> pt = p.getPointAlongPath(m);
+        g.drawEllipse(pt.getX()-5,pt.getY()-5, 10, 10, 1);*/
         
         
     }
