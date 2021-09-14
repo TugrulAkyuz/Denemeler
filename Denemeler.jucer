@@ -4,6 +4,7 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="JPUAXN" name="Denemeler">
     <GROUP id="{6A89BEF3-4559-7239-79CB-AC4493ED2FA2}" name="Source">
+      <FILE id="QwWM78" name="AyriRect.h" compile="0" resource="0" file="Source/AyriRect.h"/>
       <FILE id="pzCyfN" name="Curvepanel.cpp" compile="1" resource="0" file="Source/Curvepanel.cpp"/>
       <FILE id="vzNQRs" name="Curvepanel.h" compile="0" resource="0" file="Source/Curvepanel.h"/>
       <FILE id="GYRoXW" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
@@ -28,6 +29,8 @@
         <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2019 targetFolder="Builds/VisualStudio2019">
@@ -44,6 +47,8 @@
         <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
@@ -56,5 +61,7 @@
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
 </JUCERPROJECT>

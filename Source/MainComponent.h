@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "Curvepanel.h"
+#include "AyriRect.h"
  
 
 
@@ -158,6 +159,11 @@ private:
     juce::ADSR::Parameters myADSR_Params;
     
     MyLookAndFeel myLookAndFeel;
+    
+    AyriRect myAyriRect;
+    
+    
+    
     std::vector <juce::Component *> getAllSliders(){
         
         return {
