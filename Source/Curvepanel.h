@@ -22,7 +22,7 @@ enum
     
 };
 
-class CurvePanel : public juce::Component
+class CurvePanel : public juce::Component , juce::Timer
 {
     public :
     CurvePanel()
@@ -33,12 +33,44 @@ class CurvePanel : public juce::Component
         decay_time = 1.0f;
         sustain_value = 1.0;
         release_time = 0;;
-        //startTimer(ms);
+        startTimer(ms);
     
         
     }
-    
+    void timerCallback()
+    {
+        repaint();
+    }
+    float get_t_value(Point<float> P0, Point<float> C0, Point<float> P2, int x)
+    {
+        float b = 2 * C0.x;
+        float c = P0.x - x;
+        float a = P2.x - P0.x - 2 * C0.x;
+        float v = b * b - 4 * a * c;
+        if (v < 0)
+            return 0;
+        v = sqrt(v);
+        float t;
+        if ((-b + v) > 0)
+        {
+            t = (-b + v) / (2 * a);
+            if (t < 0 || t>1) return 0;
+            return t;
 
+        }
+            
+        if ((-b - v) > 0)
+        {
+             t = (-b + v) / (2 * a);
+            if (t < 0 || t>1) return 0;
+            return t;
+        }
+           
+        return 0;
+       
+
+    }
+    int tug_time = 0;
     
     void paint(juce::Graphics &g) override
     {
@@ -92,7 +124,13 @@ class CurvePanel : public juce::Component
         
         //p.lineTo(attack_pos,1*getHeight()/5);
         p.quadraticTo(attack_pos/2, getHeight(), attack_pos, 1*getHeight()/5) ;
-        
+        float t  = get_t_value(Point<float>(0, getHeight()), Point<float>(attack_pos / 2, getHeight()), Point<float>(sustain_pos, getHeight()), tug_time);
+        tug_time++;
+        if (tug_time == 50)  tug_time = 0;
+        int y = (1 - t)* (1 - t) * getHeight() + 2 * (1 - t) * getHeight() + t * t * 1 * getHeight() / 5;
+        //g.drawEllipse(tug_time, y, 10, 10, 2);
+        g.drawEllipse(tug_time, y/10, 10, 10, 2);
+
         //p.lineTo(decay_pos,sustain_pos );
         p.quadraticTo((decay_pos + attack_pos)/2, sustain_pos, decay_pos, sustain_pos) ;
         p.lineTo(decay_pos + getWidth()/4, sustain_pos);
@@ -148,6 +186,9 @@ class CurvePanel : public juce::Component
 //        {
 //            m = 1;
 //        }
+
+
+   
  
         
     }

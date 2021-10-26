@@ -56,22 +56,22 @@ class AyriRect : public juce::Component,
         vertexBuffer = {
             // Vertex 0
             {
-                { -0.5f, 0.5f },        // (-0.5, 0.5)
+                { -0.5f, 0.5f , 0},        // (-0.5, 0.5)
                 { 1.f, 0.f, 0.f, 1.f }  // Red
             },
             // Vertex 1
             {
-                { 0.5f, 0.5f },         // (0.5, 0.5)
+                { 1.0f, 1.0f ,0.0f},         // (0.5, 0.5)
                 { 1.f, 0.5f, 0.f, 1.f } // Orange
             },
             // Vertex 2
             {
-                { 0.5f, -0.5f },        // (0.5, -0.5)
+                { 0.5f, -0.5f ,0},        // (0.5, -0.5)
                 { 1.f, 1.f, 0.f, 1.f }  // Yellow
             },
             // Vertex 3
             {
-                { -0.5f, -0.5f },       // (-0.5, -0.5)
+                { -0.5f, -0.5f , 0},       // (-0.5, -0.5)
                 { 1.f, 0.f, 1.f, 1.f }  // Purple
             }
         };
@@ -155,7 +155,7 @@ class AyriRect : public juce::Component,
         int v_size = sizeof(Vertex);
         openGLContext.extensions.glVertexAttribPointer(
             0,              // The attribute's index (AKA location).
-            2,              // How many values this attribute contains.
+            3,              // How many values this attribute contains.
             GL_FLOAT,       // The attribute's type (float).
             GL_FALSE,       // Tells OpenGL NOT to normalise the values.
             v_size, // How many bytes to move to find the attribute with
@@ -174,7 +174,7 @@ class AyriRect : public juce::Component,
             GL_FLOAT,
             GL_FALSE,
             sizeof(Vertex),
-            (GLvoid*)(sizeof(float) * 2)    // This attribute comes after the
+            (GLvoid*)(sizeof(float) * 3)    // This attribute comes after the
                                             // position attribute in the Vertex
                                             // struct, so we need to skip over the
                                             // size of the position array to find
@@ -235,7 +235,7 @@ class AyriRect : public juce::Component,
     juce::OpenGLContext openGLContext;
     struct Vertex
      {
-         float position[2];
+         float position[3];
          float colour[4];
      };
     std::vector<Vertex> vertexBuffer;
