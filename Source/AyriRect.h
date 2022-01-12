@@ -15,7 +15,7 @@ using namespace juce::gl;
 using namespace juce;
 
 class AyriRect : public juce::Component,
-                public juce::OpenGLRenderer
+    public juce::OpenGLRenderer,public juce::Timer
 {
     
     public :
@@ -38,6 +38,7 @@ class AyriRect : public juce::Component,
 
         // Finally - we attach the context to this Component.
         openGLContext.attachTo(*this);
+        startTimer(20);
      
         
     }
@@ -45,6 +46,20 @@ class AyriRect : public juce::Component,
     {
         openGLContext.detach();
     }
+
+    void timerCallback()
+    {
+        vertexBuffer[1].position[1] += 0.01;
+        openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        openGLContext.extensions.glBufferData(
+            GL_ARRAY_BUFFER,                        // The type of data we're sending.
+            sizeof(Vertex) * vertexBuffer.size(),   // The size (in bytes) of the data.
+            vertexBuffer.data(),                    // A pointer to the actual data.
+            GL_STREAM_DRAW                          // How we want the buffer to be drawn.
+        );
+
+    }
+
     void  newOpenGLContextCreated() override
     {
         // Generate 1 buffer, using our vbo variable to store its ID.
@@ -61,7 +76,7 @@ class AyriRect : public juce::Component,
             },
             // Vertex 1
             {
-                { 1.0f, 1.0f ,0.0f},         // (0.5, 0.5)
+                { 1.0f, 0.5f ,0.0f},         // (0.5, 0.5)
                 { 1.f, 0.5f, 0.f, 1.f } // Orange
             },
             // Vertex 2
@@ -89,7 +104,7 @@ class AyriRect : public juce::Component,
             GL_ARRAY_BUFFER,                        // The type of data we're sending.
             sizeof(Vertex) * vertexBuffer.size(),   // The size (in bytes) of the data.
             vertexBuffer.data(),                    // A pointer to the actual data.
-            GL_STATIC_DRAW                          // How we want the buffer to be drawn.
+            GL_STREAM_DRAW                          // How we want the buffer to be drawn.
         );
         
         // Bind the IBO.
@@ -100,7 +115,7 @@ class AyriRect : public juce::Component,
             GL_ELEMENT_ARRAY_BUFFER,
             sizeof(unsigned int) * indexBuffer.size(),
             indexBuffer.data(),
-            GL_STATIC_DRAW
+            GL_STREAM_DRAW
         );
         
         

@@ -39,7 +39,7 @@ class CurvePanel : public juce::Component , juce::Timer
     }
     void timerCallback()
     {
-        repaint();
+       // repaint();
     }
     float get_t_value(Point<float> P0, Point<float> C0, Point<float> P2, int x)
     {
@@ -125,7 +125,7 @@ class CurvePanel : public juce::Component , juce::Timer
         //p.lineTo(attack_pos,1*getHeight()/5);
         p.quadraticTo(attack_pos/2, getHeight(), attack_pos, 1*getHeight()/5) ;
         float t  = get_t_value(Point<float>(0, getHeight()), Point<float>(attack_pos / 2, getHeight()), Point<float>(sustain_pos, getHeight()), tug_time);
-        tug_time++;
+        //tug_time++;
         if (tug_time == 50)  tug_time = 0;
         int y = (1 - t)* (1 - t) * getHeight() + 2 * (1 - t) * getHeight() + t * t * 1 * getHeight() / 5;
         //g.drawEllipse(tug_time, y, 10, 10, 2);
